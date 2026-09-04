@@ -1,0 +1,12 @@
+Please extract the following fields from the provided image. Do not imagine the key:values. Emit only if confident. Return extracted fields as json. You cannot use same value for two fields:
+1.	Date
+2.	Check Type
+3.	Bank ID
+4.	Bank Name
+5.	Account Number
+6.	Issuer Name
+7.	Payee Name
+8.	Check Amount
+9.      Cheque No.
+10.     RT/No or MICR Code
+11.     Bank Address

@@ -1,0 +1,120 @@
+{
+  "$schema_version": "1.0",
+  "generated": "2026-09-04",
+  "region": "ap-south-1",
+  "region_name": "Asia Pacific (Mumbai)",
+  "notes": {
+    "routing": "Bedrock model availability in ap-south-1 is three-state, not boolean. route=in_region -> call the base model ID directly. route=geo -> you MUST call the prefixed profile ID (apac.* or in.*). route=global -> you MUST call global.*. Calling a base ID where route != in_region returns ValidationException 'Invocation of model ID ... with on-demand throughput isn't supported. Retry your request with the ID or ARN of an inference profile'.",
+    "invoke_id": "ALWAYS send the value of `invoke_id` as modelId. `base_id` is informational only.",
+    "pricing_unit": "USD per 1,000,000 tokens unless stated otherwise.",
+    "pricing_basis": "Billing follows the SOURCE region (ap-south-1), even for global routing. Geo CRIS and in-region are priced identically; global CRIS is ~10% cheaper than the listed geo/in-region rate.",
+    "endpoints": "Some models expose different IDs on bedrock-runtime vs the newer bedrock-mantle (OpenAI-compatible) endpoint. IDs below are bedrock-runtime unless mantle_id is given.",
+    "vision_flag": "`vision: true` means the model accepts IMAGE input. Only these may be offered in an image-based tab."
+  },
+  "text_models": [
+    {"provider":"Anthropic","name":"Claude Opus 5","base_id":"anthropic.claude-opus-5","invoke_id":"global.anthropic.claude-opus-5","route":"global","vision":true,"price_in":5.00,"price_out":25.00,"cache_write":6.25,"cache_read":0.50,"context":1000000,"max_output":128000},
+    {"provider":"Anthropic","name":"Claude Sonnet 5","base_id":"anthropic.claude-sonnet-5","invoke_id":"global.anthropic.claude-sonnet-5","route":"global","vision":true,"price_in":2.00,"price_out":10.00,"cache_write":2.50,"cache_read":0.20,"context":1000000,"max_output":128000},
+    {"provider":"Anthropic","name":"Claude Opus 4.8","base_id":"anthropic.claude-opus-4-8","invoke_id":"global.anthropic.claude-opus-4-8","route":"global","vision":true,"price_in":5.00,"price_out":25.00,"context":1000000,"max_output":128000},
+    {"provider":"Anthropic","name":"Claude Opus 4.7","base_id":"anthropic.claude-opus-4-7","invoke_id":"global.anthropic.claude-opus-4-7","route":"global","vision":true,"price_in":5.00,"price_out":25.00,"context":1000000,"max_output":128000},
+    {"provider":"Anthropic","name":"Claude Opus 4.6","base_id":"anthropic.claude-opus-4-6-v1","invoke_id":"global.anthropic.claude-opus-4-6-v1","route":"global","vision":true,"price_in":5.00,"price_out":25.00,"context":1000000,"max_output":128000},
+    {"provider":"Anthropic","name":"Claude Sonnet 4.6","base_id":"anthropic.claude-sonnet-4-6","invoke_id":"global.anthropic.claude-sonnet-4-6","route":"global","vision":true,"price_in":3.00,"price_out":15.00,"context":1000000,"max_output":64000},
+    {"provider":"Anthropic","name":"Claude Opus 4.5","base_id":"anthropic.claude-opus-4-5-20251101-v1:0","invoke_id":"global.anthropic.claude-opus-4-5-20251101-v1:0","route":"global","vision":true,"price_in":5.00,"price_out":25.00,"context":200000,"max_output":64000},
+    {"provider":"Anthropic","name":"Claude Sonnet 4.5","base_id":"anthropic.claude-sonnet-4-5-20250929-v1:0","invoke_id":"global.anthropic.claude-sonnet-4-5-20250929-v1:0","route":"global","vision":true,"price_in":3.00,"price_out":15.00,"context":200000,"max_output":64000},
+    {"provider":"Anthropic","name":"Claude Haiku 4.5","base_id":"anthropic.claude-haiku-4-5-20251001-v1:0","invoke_id":"global.anthropic.claude-haiku-4-5-20251001-v1:0","route":"global","vision":true,"price_in":1.00,"price_out":5.00,"context":200000,"max_output":64000},
+    {"provider":"Anthropic","name":"Claude Sonnet 4","base_id":"anthropic.claude-sonnet-4-20250514-v1:0","invoke_id":"apac.anthropic.claude-sonnet-4-20250514-v1:0","route":"geo_apac","vision":true,"price_in":3.00,"price_out":15.00,"context":200000,"max_output":64000,"note":"Only Claude model still carrying an apac.* profile; keeps traffic in APAC."},
+    {"provider":"Anthropic","name":"Claude Fable 5.1","base_id":"anthropic.claude-fable-5-1","invoke_id":"global.anthropic.claude-fable-5-1","route":"global","vision":true,"price_in":10.00,"price_out":50.00,"context":1000000,"max_output":128000,"access":"gated - requires aws_review data-retention opt-in; entitlement disputed, verify before enabling"},
+    {"provider":"Anthropic","name":"Claude Mythos 5.1","base_id":"anthropic.claude-mythos-5-1","invoke_id":"global.anthropic.claude-mythos-5-1","route":"global","vision":true,"price_in":10.00,"price_out":50.00,"context":1000000,"max_output":128000,"access":"gated - vetted orgs only, Beta Service"},
+
+    {"provider":"OpenAI","name":"GPT-5.6 Sol","base_id":"openai.gpt-5.6-sol","invoke_id":"global.openai.gpt-5.6-sol","route":"global","vision":true,"price_in":5.50,"price_out":33.00,"cache_read":0.55,"context":1000000,"endpoint":"bedrock-mantle"},
+    {"provider":"OpenAI","name":"GPT-5.6 Terra","base_id":"openai.gpt-5.6-terra","invoke_id":"in.openai.gpt-5.6-terra","alt_invoke_id":"global.openai.gpt-5.6-terra","route":"geo_in","vision":true,"price_in":2.20,"price_out":13.20,"cache_read":0.22,"context":1000000,"endpoint":"bedrock-mantle","note":"in.* keeps inference inside India (ap-south-1/ap-south-2) - use for data residency."},
+    {"provider":"OpenAI","name":"GPT-5.6 Luna","base_id":"openai.gpt-5.6-luna","invoke_id":"in.openai.gpt-5.6-luna","alt_invoke_id":"global.openai.gpt-5.6-luna","route":"geo_in","vision":true,"price_in":0.22,"price_out":1.32,"cache_read":0.022,"context":1000000,"endpoint":"bedrock-mantle"},
+    {"provider":"OpenAI","name":"gpt-oss-120b","base_id":"openai.gpt-oss-120b-1:0","invoke_id":"openai.gpt-oss-120b-1:0","mantle_id":"openai.gpt-oss-120b","route":"in_region","vision":false,"price_in":0.15,"price_out":0.62,"price_region":"ap-southeast-2 (Mumbai rate unconfirmed)","context":128000,"max_output":16000},
+    {"provider":"OpenAI","name":"gpt-oss-20b","base_id":"openai.gpt-oss-20b-1:0","invoke_id":"openai.gpt-oss-20b-1:0","mantle_id":"openai.gpt-oss-20b","route":"in_region","vision":false,"price_in":0.07,"price_out":0.31,"price_region":"ap-southeast-2 (Mumbai rate unconfirmed)","context":128000,"max_output":16000},
+    {"provider":"OpenAI","name":"gpt-oss-safeguard-120b","base_id":"openai.gpt-oss-safeguard-120b","invoke_id":"openai.gpt-oss-safeguard-120b","route":"in_region","vision":false,"price_in":0.18,"price_out":0.71,"context":128000,"max_output":16000},
+    {"provider":"OpenAI","name":"gpt-oss-safeguard-20b","base_id":"openai.gpt-oss-safeguard-20b","invoke_id":"openai.gpt-oss-safeguard-20b","route":"in_region","vision":false,"price_in":0.08,"price_out":0.24,"context":128000,"max_output":16000},
+
+    {"provider":"xAI","name":"Grok 4.6","base_id":"xai.grok-4.6","invoke_id":"global.xai.grok-4.6","route":"global","vision":true,"price_in":null,"price_out":null,"context":500000,"endpoint":"bedrock-mantle","note":"Mumbai price not published at time of research."},
+
+    {"provider":"Amazon","name":"Nova 2 Lite","base_id":"amazon.nova-2-lite-v1:0","invoke_id":"global.amazon.nova-2-lite-v1:0","route":"global","vision":true,"video_input":true,"price_in":0.30,"price_out":2.50,"context":1000000,"max_output":64000},
+    {"provider":"Amazon","name":"Nova Pro","base_id":"amazon.nova-pro-v1:0","invoke_id":"apac.amazon.nova-pro-v1:0","route":"geo_apac","vision":true,"video_input":true,"price_in":0.80,"price_out":3.20,"price_region":"us-east-1 (Mumbai rate unconfirmed)","context":300000,"max_output":5000},
+
+    {"provider":"Mistral","name":"Mistral Large 3","base_id":"mistral.mistral-large-3-675b-instruct","invoke_id":"mistral.mistral-large-3-675b-instruct","route":"in_region","vision":true,"price_in":0.59,"price_out":1.76,"context":256000,"max_output":32000},
+    {"provider":"Mistral","name":"Magistral Small 2509","base_id":"mistral.magistral-small-2509","invoke_id":"mistral.magistral-small-2509","route":"in_region","vision":true,"price_in":0.59,"price_out":1.76,"context":128000,"max_output":40000},
+    {"provider":"Mistral","name":"Ministral 14B 3.0","base_id":"mistral.ministral-3-14b-instruct","invoke_id":"mistral.ministral-3-14b-instruct","route":"in_region","vision":true,"price_in":0.24,"price_out":0.24,"context":128000,"max_output":8000},
+    {"provider":"Mistral","name":"Ministral 3 8B","base_id":"mistral.ministral-3-8b-instruct","invoke_id":"mistral.ministral-3-8b-instruct","route":"in_region","vision":true,"price_in":0.18,"price_out":0.18,"context":128000,"max_output":8000},
+    {"provider":"Mistral","name":"Ministral 3B","base_id":"mistral.ministral-3-3b-instruct","invoke_id":"mistral.ministral-3-3b-instruct","route":"in_region","vision":true,"price_in":0.12,"price_out":0.12,"context":128000,"max_output":8000},
+    {"provider":"Mistral","name":"Mistral Large (24.02)","base_id":"mistral.mistral-large-2402-v1:0","invoke_id":"mistral.mistral-large-2402-v1:0","route":"in_region","vision":false,"price_in":null,"price_out":null,"context":32000,"max_output":4000,"lifecycle":"legacy"},
+    {"provider":"Mistral","name":"Mixtral 8x7B Instruct","base_id":"mistral.mixtral-8x7b-instruct-v0:1","invoke_id":"mistral.mixtral-8x7b-instruct-v0:1","route":"in_region","vision":false,"price_in":null,"price_out":null,"context":32000,"max_output":4000,"lifecycle":"legacy - EOL notice posted"},
+    {"provider":"Mistral","name":"Mistral 7B Instruct","base_id":"mistral.mistral-7b-instruct-v0:2","invoke_id":"mistral.mistral-7b-instruct-v0:2","route":"in_region","vision":false,"price_in":null,"price_out":null,"context":32000,"max_output":4000,"lifecycle":"legacy - EOL notice posted"},
+
+    {"provider":"Qwen","name":"Qwen3 VL 235B A22B","base_id":"qwen.qwen3-vl-235b-a22b","invoke_id":"qwen.qwen3-vl-235b-a22b","route":"in_region","vision":true,"price_in":0.62,"price_out":3.13,"context":256000,"max_output":8000,"note":"Only in-region (India-resident) VLM at frontier scale."},
+    {"provider":"Qwen","name":"Qwen3 Next 80B A3B","base_id":"qwen.qwen3-next-80b-a3b","invoke_id":"qwen.qwen3-next-80b-a3b","route":"in_region","vision":false,"price_in":0.18,"price_out":1.41,"context":256000,"max_output":8000},
+    {"provider":"Qwen","name":"Qwen3 235B A22B 2507","base_id":"qwen.qwen3-235b-a22b-2507-v1:0","invoke_id":"qwen.qwen3-235b-a22b-2507-v1:0","route":"in_region","vision":false,"price_in":0.23,"price_out":0.91,"price_region":"ap-southeast-2 (Mumbai rate unconfirmed)","context":256000,"max_output":8000},
+    {"provider":"Qwen","name":"Qwen3 32B","base_id":"qwen.qwen3-32b-v1:0","invoke_id":"qwen.qwen3-32b-v1:0","mantle_id":"qwen.qwen3-32b","route":"in_region","vision":false,"price_in":0.15,"price_out":0.62,"price_region":"ap-southeast-2 (Mumbai rate unconfirmed)","context":32000,"max_output":8000},
+    {"provider":"Qwen","name":"Qwen3 Coder 480B A35B","base_id":"qwen.qwen3-coder-480b-a35b-v1:0","invoke_id":"qwen.qwen3-coder-480b-a35b-v1:0","route":"in_region","vision":false,"price_in":null,"price_out":null,"context":128000,"max_output":16000},
+    {"provider":"Qwen","name":"Qwen3 Coder 30B A3B","base_id":"qwen.qwen3-coder-30b-a3b-v1:0","invoke_id":"qwen.qwen3-coder-30b-a3b-v1:0","mantle_id":"qwen.qwen3-coder-30b-a3b-instruct","route":"in_region","vision":false,"price_in":0.15,"price_out":0.62,"price_region":"ap-southeast-2 (Mumbai rate unconfirmed)","context":256000,"max_output":16000},
+
+    {"provider":"Google","name":"Gemma 3 27B","base_id":"google.gemma-3-27b-it","invoke_id":"google.gemma-3-27b-it","route":"in_region","vision":true,"price_in":0.27,"price_out":0.45,"context":128000,"max_output":8000},
+    {"provider":"Google","name":"Gemma 3 12B IT","base_id":"google.gemma-3-12b-it","invoke_id":"google.gemma-3-12b-it","route":"in_region","vision":true,"price_in":0.11,"price_out":0.34,"context":128000,"max_output":8000},
+    {"provider":"Google","name":"Gemma 3 4B IT","base_id":"google.gemma-3-4b-it","invoke_id":"google.gemma-3-4b-it","route":"in_region","vision":true,"price_in":0.05,"price_out":0.09,"context":128000,"max_output":8000,"note":"Cheapest VLM reachable from Mumbai."},
+
+    {"provider":"DeepSeek","name":"DeepSeek V3.2","base_id":"deepseek.v3.2","invoke_id":"deepseek.v3.2","route":"in_region","vision":false,"price_in":0.74,"price_out":2.22,"context":164000,"max_output":8000},
+    {"provider":"DeepSeek","name":"DeepSeek V3.1","base_id":"deepseek.v3-v1:0","invoke_id":"deepseek.v3-v1:0","mantle_id":"deepseek.v3.1","route":"in_region","vision":false,"price_in":0.60,"price_out":1.73,"price_region":"ap-southeast-2 (Mumbai rate unconfirmed)","context":128000,"max_output":8000},
+
+    {"provider":"Z.AI","name":"GLM 5","base_id":"zai.glm-5","invoke_id":"zai.glm-5","route":"in_region","vision":false,"price_in":1.20,"price_out":3.84,"context":200000,"max_output":128000},
+    {"provider":"Z.AI","name":"GLM 4.7","base_id":"zai.glm-4.7","invoke_id":"zai.glm-4.7","route":"in_region","vision":false,"price_in":0.72,"price_out":2.64,"context":203000,"max_output":4000},
+    {"provider":"Z.AI","name":"GLM 4.7 Flash","base_id":"zai.glm-4.7-flash","invoke_id":"zai.glm-4.7-flash","route":"in_region","vision":false,"price_in":0.08,"price_out":0.48,"context":203000,"max_output":4000},
+
+    {"provider":"MiniMax","name":"MiniMax M2.5","base_id":"minimax.minimax-m2.5","invoke_id":"minimax.minimax-m2.5","route":"in_region","vision":false,"price_in":0.36,"price_out":1.44,"context":196000,"max_output":8000},
+    {"provider":"MiniMax","name":"MiniMax M2.1","base_id":"minimax.minimax-m2.1","invoke_id":"minimax.minimax-m2.1","route":"in_region","vision":false,"price_in":0.36,"price_out":1.44,"context":196000,"max_output":8000},
+    {"provider":"MiniMax","name":"MiniMax M2","base_id":"minimax.minimax-m2","invoke_id":"minimax.minimax-m2","route":"in_region","vision":false,"price_in":0.35,"price_out":1.41,"context":1000000,"max_output":8000},
+
+    {"provider":"Moonshot AI","name":"Kimi K2.5","base_id":"moonshotai.kimi-k2.5","invoke_id":"moonshotai.kimi-k2.5","route":"in_region","vision":true,"price_in":0.72,"price_out":3.60,"context":256000,"max_output":16000},
+    {"provider":"Moonshot AI","name":"Kimi K2 Thinking","base_id":"moonshot.kimi-k2-thinking","invoke_id":"moonshot.kimi-k2-thinking","mantle_id":"moonshotai.kimi-k2-thinking","route":"in_region","vision":false,"price_in":0.71,"price_out":2.94,"context":256000,"max_output":16000},
+
+    {"provider":"NVIDIA","name":"Nemotron Nano 12B v2 VL","base_id":"nvidia.nemotron-nano-12b-v2","invoke_id":"nvidia.nemotron-nano-12b-v2","route":"in_region","vision":true,"price_in":0.24,"price_out":0.71,"context":128000,"max_output":8000},
+    {"provider":"NVIDIA","name":"Nemotron Nano 3 30B","base_id":"nvidia.nemotron-nano-3-30b","invoke_id":"nvidia.nemotron-nano-3-30b","route":"in_region","vision":false,"price_in":0.07,"price_out":0.28,"context":256000,"max_output":8000},
+    {"provider":"NVIDIA","name":"Nemotron Nano 9B v2","base_id":"nvidia.nemotron-nano-9b-v2","invoke_id":"nvidia.nemotron-nano-9b-v2","route":"in_region","vision":false,"price_in":0.07,"price_out":0.27,"context":128000,"max_output":8000},
+
+    {"provider":"Meta","name":"Llama 3 70B Instruct","base_id":"meta.llama3-70b-instruct-v1:0","invoke_id":"meta.llama3-70b-instruct-v1:0","route":"in_region","vision":false,"price_in":2.65,"price_out":3.51,"price_region":"us-east-1 (Mumbai rate unconfirmed)","context":8000,"max_output":8000,"lifecycle":"legacy"},
+    {"provider":"Meta","name":"Llama 3 8B Instruct","base_id":"meta.llama3-8b-instruct-v1:0","invoke_id":"meta.llama3-8b-instruct-v1:0","route":"in_region","vision":false,"price_in":0.80,"price_out":1.04,"price_region":"us-east-1 (Mumbai rate unconfirmed, figure suspect)","context":8000,"max_output":8000,"lifecycle":"legacy"}
+  ],
+  "non_text_models_ap_south_1": [
+    {"provider":"Amazon","name":"Titan Text Embeddings V2","invoke_id":"amazon.titan-embed-text-v2:0","route":"in_region","kind":"embedding","vision":false,"price":"$0.024 / 1M input tokens (Mumbai)","api":"InvokeModel only - no Converse"},
+    {"provider":"Amazon","name":"Titan Multimodal Embeddings G1","invoke_id":"amazon.titan-embed-image-v1","route":"in_region","kind":"embedding","vision":true,"price":"$1.00 / 1M input tokens + $0.00007 per input image (Mumbai)","api":"InvokeModel only"},
+    {"provider":"Cohere","name":"Embed English v3","invoke_id":"cohere.embed-english-v3","route":"in_region","kind":"embedding","vision":false,"price":"$0.10 / 1M input tokens","api":"InvokeModel only"},
+    {"provider":"Cohere","name":"Embed Multilingual v3","invoke_id":"cohere.embed-multilingual-v3","route":"in_region","kind":"embedding","vision":false,"price":"$0.10 / 1M input tokens","api":"InvokeModel only"},
+    {"provider":"Cohere","name":"Embed v4","invoke_id":"global.cohere.embed-v4:0","route":"global","kind":"embedding","vision":true,"price":"$0.12 / 1M input tokens","api":"InvokeModel only"},
+    {"provider":"TwelveLabs","name":"Pegasus v1.2","invoke_id":"global.twelvelabs.pegasus-1-2-v1:0","route":"global","kind":"video understanding","vision":false,"video_input":true,"price":"$0.00049 / second of video + $7.50 / 1M output tokens"},
+    {"provider":"Mistral","name":"Voxtral Small 24B","invoke_id":"mistral.voxtral-small-24b-2507","route":"in_region","kind":"speech->text","vision":false,"audio_input":true,"price":"$0.12 in / $0.35 out per 1M tokens (Mumbai)"},
+    {"provider":"Mistral","name":"Voxtral Mini 3B","invoke_id":"mistral.voxtral-mini-3b-2507","route":"in_region","kind":"speech->text","vision":false,"audio_input":true,"price":"$0.05 in / $0.05 out per 1M tokens (Mumbai)"}
+  ],
+  "not_available_in_ap_south_1": [
+    "All Stability AI image models (us-west-2 / US geo only)",
+    "Amazon Nova Canvas, Nova Reel, Nova Sonic, Nova 2 Sonic, Nova Premier, Nova Multimodal Embeddings, Titan Image Generator",
+    "Luma Ray 2 (us-west-2 only)",
+    "Amazon Rerank 1.0 and Cohere Rerank 3.5 - NO rerank model is callable from Mumbai",
+    "Cohere Command R / R+ , AI21 Jamba 1.5 Large/Mini, Writer Palmyra (all US-only)",
+    "Meta Llama 3.1 / 3.2 / 3.3 / 4 family (US geo only) - only Llama 3 8B/70B are in Mumbai",
+    "DeepSeek R1 (US only), Mistral Pixtral Large, Mistral Small 24.02",
+    "Claude 3.5 Haiku (US only), Claude Opus 4.1 (US only), Claude Mythos 5 (us-east-1 only)",
+    "Google Gemma 4 family, Grok 4.3, GPT-5.5 / GPT-5.4, TwelveLabs Marengo embeddings"
+  ],
+  "deprecations": [
+    "anthropic.claude-3-haiku-20240307-v1:0 - the only in-region Claude in Mumbai, but EOL 2026-09-10. Do not build on it.",
+    "amazon.nova-canvas-v1:0 / amazon.nova-reel-v1:0 / v1:1 - EOL 2026-09-30 (not in Mumbai anyway)",
+    "amazon.nova-sonic-v1:0, amazon.nova-premier-v1:0 - EOL 2026-09-14",
+    "mistral.mixtral-8x7b-instruct-v0:1, mistral.mistral-7b-instruct-v0:2 - EOL notices posted"
+  ],
+  "data_residency": {
+    "india_resident": "route=in_region and route=geo_in (in.*) keep inference inside India (ap-south-1 / ap-south-2).",
+    "leaves_india": "route=global (global.*) routes worldwide; route=geo_apac (apac.*) stays in APAC but leaves India.",
+    "implication": "Every Claude model except Sonnet 4 is global-only from Mumbai, i.e. data leaves India. Surface this in the UI if residency matters."
+  },
+  "verification_required": [
+    "Run `aws bedrock list-foundation-models --region ap-south-1` and `aws bedrock list-inference-profiles --region ap-south-1` in the target account and intersect with this list before shipping. AWS docs are the source here and had internal contradictions.",
+    "apac.amazon.nova-lite-v1:0 / apac.amazon.nova-micro-v1:0 are NOT confirmed - the docs show geo-available for ap-south-1 but publish no apac profile ID. Excluded from this config deliberately.",
+    "Anthropic prices come from AWS Marketplace listings and Anthropic's platform pricing page, not from an AWS Mumbai rate card. Treat as indicative.",
+    "Prices tagged price_region are not Mumbai figures."
+  ]
+}

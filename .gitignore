@@ -1,0 +1,26 @@
+# Local configuration - copy backend/.env.example and fill in
+.env
+backend/.env
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Runtime data
+backend/uploads/
+*.log
+
+# Scratch / editors / OS
+.scratch/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

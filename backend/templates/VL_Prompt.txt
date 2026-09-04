@@ -1,0 +1,16 @@
+Extract the following fields from this cheque image and return a single JSON object.
+
+Rules:
+- Do not imagine key/value pairs. Emit a field only when you can read it confidently;
+  otherwise set it to null.
+- The same value must never be used for two different fields.
+- Read values from the image only. Do not infer or complete anything not visibly printed.
+- Return JSON only, no commentary or markdown fences.
+
+Keys to return: date, check_type, bank_id, bank_name, account_number, issuer_name,
+payee_name, check_amount, cheque_number, micr_code
+
+Field notes:
+- check_amount is the numeric (courtesy) amount, not the amount written in words.
+- The MICR line at the bottom carries the cheque number, the routing/bank code and the
+  account number as separate groups — assign each to its own field, never repeat one.
