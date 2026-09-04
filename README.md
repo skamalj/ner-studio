@@ -232,6 +232,16 @@ partner-operated and priced separately, so those numbers are deliberately not re
 
 ## Setup
 
+Prerequisites: [uv](https://docs.astral.sh/uv/), Node 18+, and AWS credentials if you want
+Textract or Bedrock. The local OCR engine is optional and needs neither.
+
+```bash
+git clone https://github.com/skamalj/ner-studio.git
+cd ner-studio
+```
+
+Then run the backend and frontend in two terminals.
+
 ### Backend
 
 ```bash
@@ -262,8 +272,11 @@ A provider with no credentials shows as *Not configured* in the UI; nothing fail
 startup. The local provider is checked differently: having `LOCAL_BASE_URL` set is not
 enough, so if nothing answers `/v1/models` it shows **Not responding** and offers no
 models, rather than claiming Ready and failing at upload time. The probe uses a 3-second
-timeout with no retries, so a dead server does not stall the model list. Model ids are discovered live from each provider's list API and fall back to a
-static list, and the model field accepts any id you type.
+timeout with no retries, so a dead server does not stall the model list.
+
+Bedrock model ids come from `model_catalog.json`; the other providers are discovered from
+their list APIs and fall back to a static list. The model field accepts any id you type, so
+nothing here is a hard limit.
 
 ### Frontend
 
@@ -275,6 +288,45 @@ npm run dev
 
 Vite serves on 5173 and proxies `/api` to `http://127.0.0.1:8010`
 (override with `VITE_API_TARGET`).
+
+### Local OCR model (optional)
+
+Powers the **Local OCR model** engine on the document panel and the **Local** provider.
+Nothing here touches AWS, and it costs nothing per page. Any OpenAI-compatible server
+works; this is the llama.cpp + GLM-OCR setup the comparisons above were measured on.
+
+1. Download a llama.cpp release for your machine from
+   [ggml-org/llama.cpp/releases](https://github.com/ggml-org/llama.cpp/releases) and unzip
+   it. On Windows with an Intel/AMD iGPU take the **vulkan** build
+   (`llama-<build>-bin-win-vulkan-x64.zip`); `-cpu-` works everywhere, CUDA builds need an
+   NVIDIA card.
+
+2. Start the server. The model (~1 GB) downloads on first run and is cached afterwards:
+
+   ```bash
+   llama-server -hf ggml-org/GLM-OCR-GGUF --host 127.0.0.1 --port 8085 -c 12000 -ngl 99 --flash-attn off -fit off
+   ```
+
+   `--flash-attn off -fit off` and the context size come from GLM-OCR's own usage notes,
+   not preference - it misbehaves without them. `-ngl 99` offloads every layer to the GPU;
+   drop it for pure CPU. Set `LLAMA_CACHE` to keep the weights somewhere specific.
+
+3. Point the backend at it and restart:
+
+   ```
+   LOCAL_BASE_URL=http://127.0.0.1:8085/v1
+   ```
+
+The provider list then shows **Local (OpenAI-compatible): Ready** and the OCR engine
+dropdown enables *Local OCR model*. If the server is not running it reads *Not responding*
+and offers no models, rather than failing at upload time.
+
+GLM-OCR is a **text-recognition** model: it returns the page as text, not JSON. Use it as
+the OCR stage feeding the extraction tab. On the vision tab it will return plain text into
+the Raw response panel, which is expected.
+
+Swapping in another model is one flag - `-hf ggml-org/<model>-GGUF` - and the app picks up
+whatever `/v1/models` reports.
 
 ### Tests
 
